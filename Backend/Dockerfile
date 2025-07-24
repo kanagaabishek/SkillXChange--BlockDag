@@ -1,16 +1,17 @@
 # Use an official OpenJDK runtime as a parent image
 FROM eclipse-temurin:24-jdk
 
-# Set working directory inside the container
+# Argument to define the JAR file path
+ARG JAR_FILE=target/demo-0.0.1-SNAPSHOT.jar
+
+# Set working directory (optional but recommended)
 WORKDIR /app
 
-# Copy the jar file to the container
-COPY target/demo-0.0.1-SNAPSHOT.jar app.jar
+# Copy the JAR file into the container
+COPY ${JAR_FILE} app.jar
 
-# Expose the Spring Boot default port
+# Expose the port Spring Boot runs on
 EXPOSE 8080
 
-# Command to run the application
+# Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
-
-
