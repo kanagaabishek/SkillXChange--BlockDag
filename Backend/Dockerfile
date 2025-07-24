@@ -1,11 +1,11 @@
-# Use an official OpenJDK runtime as a parent image
+# First stage: build the JAR
+FROM eclipse-temurin:24-jdk AS builder
+WORKDIR /app
+COPY . .
+RUN ./mvnw package -DskipTests
+
+# Second stage: run the app
 FROM eclipse-temurin:24-jdk
-
-# Argument to define the JAR file path
-ARG JAR_FILE=target/demo-0.0.1-SNAPSHOT.jar
-
-# Copy the JAR file into the container
-COPY ${JAR_FILE} app.jar
-
-# Run the application
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+WORKDIR /app
+COPY --from=builder /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
