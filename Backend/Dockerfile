@@ -4,9 +4,6 @@ FROM eclipse-temurin:24-jdk
 # Argument to define the JAR file path
 ARG JAR_FILE=target/demo-0.0.1-SNAPSHOT.jar
 
-# Set working directory (optional but recommended)
-WORKDIR /app
-
 # Copy the JAR file into the container
 COPY ${JAR_FILE} app.jar
 
